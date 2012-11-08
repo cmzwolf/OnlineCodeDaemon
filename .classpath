@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/OnlineCodeBusiness"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/OnlineCodeCommons"/>
+	<classpathentry kind="lib" path="/Users/zwolf/Work/workspaceTestServlet/OnlineCodeLibs/libs/activation.jar"/>
+	<classpathentry kind="lib" path="/Users/zwolf/Work/workspaceTestServlet/OnlineCodeLibs/libs/commons-email-1.2.jar"/>
+	<classpathentry kind="lib" path="/Users/zwolf/Work/workspaceTestServlet/OnlineCodeLibs/libs/mail.jar"/>
+	<classpathentry kind="lib" path="/Users/zwolf/Work/workspaceTestServlet/OnlineCodeLibs/libs/GeneralParameter.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
