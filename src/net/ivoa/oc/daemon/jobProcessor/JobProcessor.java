@@ -95,7 +95,7 @@ public class JobProcessor {
 			for (Map.Entry<String, String> entry : configurationContent
 					.entrySet()) {
 
-				String toReplace = entry.getKey();
+				String toReplace = "$$"+ entry.getKey() + "$$";
 				fileLine[i] = fileLine[i].replaceAll(toReplace,
 						entry.getValue());
 			}
