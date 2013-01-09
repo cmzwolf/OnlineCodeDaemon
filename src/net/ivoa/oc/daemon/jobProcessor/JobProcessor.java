@@ -21,7 +21,6 @@ public class JobProcessor {
 	public static JobProcessor getInstance() {
 		return instance;
 	}
-	
 
 	private JobProcessor() {
 	}
