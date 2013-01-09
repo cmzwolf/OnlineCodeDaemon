@@ -12,9 +12,7 @@ import net.ivoa.pdr.business.ParametersBusiness;
 import net.ivoa.pdr.commons.IOFile;
 
 /**
- * @author Carlo Maria Zwolf
- * Observatoire de Paris
- * LERMA
+ * @author Carlo Maria Zwolf Observatoire de Paris LERMA
  */
 
 public class JobProcessor {
@@ -90,14 +88,13 @@ public class JobProcessor {
 		String[] fileLine = patternFileContent.split("\n");
 
 		for (int i = 0; i < fileLine.length; i++) {
-			fileLine[i] = fileLine[i].replaceAll("RunId",
+			fileLine[i] = fileLine[i].replace("$$RunId$$",
 					idConfiguration.toString());
 			for (Map.Entry<String, String> entry : configurationContent
 					.entrySet()) {
 
-				String toReplace = "$$"+ entry.getKey() + "$$";
-				fileLine[i] = fileLine[i].replaceAll(toReplace,
-						entry.getValue());
+				String toReplace = "$$"+entry.getKey()+"$$";
+				fileLine[i] = fileLine[i].replace(toReplace, entry.getValue());
 			}
 		}
 		return fileLine;

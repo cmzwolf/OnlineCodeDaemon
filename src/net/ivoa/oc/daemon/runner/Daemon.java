@@ -6,6 +6,8 @@ package net.ivoa.oc.daemon.runner;
  * LERMA
  */
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
 
 import org.apache.commons.mail.EmailException;
@@ -18,7 +20,7 @@ import net.ivoa.pdr.business.MailSenderBusiness;
 
 public class Daemon {
 	public static void main(String[] args) throws SQLException,
-			ClassNotFoundException, EmailException {
+			ClassNotFoundException, EmailException, MalformedURLException, IOException {
 		PDLverifier.getInstance().performPDLVerificationOnJobs();
 		Purger.getInstance().purge();
 		JobProcessor.getInstance().processJobs();
