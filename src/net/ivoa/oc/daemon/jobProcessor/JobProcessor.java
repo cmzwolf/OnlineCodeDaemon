@@ -56,7 +56,7 @@ public class JobProcessor {
 				JobProcessor.getInstance().writeInputFile(
 						replacedValuesFileContent, idConfiguration,
 						inputfilePattern.getFileDirectory(),
-						inputfilePattern.getFikeExtension());
+						inputfilePattern.getFileExtension());
 
 			}
 

@@ -45,7 +45,7 @@ public class Purger {
 			// we delete all its outputs
 			for (IOFile currentFile : outputs) {
 				String filename = currentFile.getFileDirectory() + "/"
-						+ currentJobId + "." + currentFile.getFikeExtension();
+						+ currentJobId + "." + currentFile.getFileExtension();
 				File file = new File(filename);
 				file.delete();
 			}

@@ -9,6 +9,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.print.attribute.standard.MediaSize.Other;
+
 import net.ivoa.pdr.business.GlobalTechConfigBusiness;
 import net.ivoa.pdr.business.JobBusiness;
 import net.ivoa.pdr.business.OutputsBusiness;
@@ -57,23 +59,27 @@ public class ResultsProcessor {
 			String servletContainer = GlobalTechConfigBusiness.getInstance()
 					.getServletContainer();
 
+			String resultName = currentFile.getResultName();
+
 			String fileUrl = servletContainer + "output/" + idConfiguration
-					+ "." + currentFile.getFikeExtension();
+					+ "." + currentFile.getFileExtension();
 
 			String result = "";
 
-			if (currentFile.getFikeExtension().endsWith(".Value")) {
+			if (currentFile.getFileExtension().endsWith(".Value")) {
 				Integer totalLengtOfFileExtension = currentFile
-						.getFikeExtension().length();
-				String parameterName = currentFile.getFikeExtension()
+						.getFileExtension().length();
+				String parameterName = currentFile.getFileExtension()
 						.substring(0, totalLengtOfFileExtension - 6);
 
-				result = "Value." + parameterName + "="
-						+ getFileContentFromUrl(fileUrl);
+				result = getFileContentFromUrl(fileUrl);
+
+				resultName = parameterName;
 			} else {
 				result = fileUrl;
 			}
-			JobBusiness.getInstance().insertResults(idConfiguration, result);
+			JobBusiness.getInstance().insertResults(idConfiguration, result,
+					resultName);
 		}
 		JobBusiness.getInstance().markJobAsFinished(idConfiguration);
 	}
@@ -98,7 +104,7 @@ public class ResultsProcessor {
 		boolean toReturn = true;
 		for (IOFile currentFile : outputs) {
 			File file = new File(currentFile.getFileDirectory() + "/"
-					+ idConfiguration + "." + currentFile.getFikeExtension());
+					+ idConfiguration + "." + currentFile.getFileExtension());
 			toReturn = toReturn && (file.exists());
 		}
 		return toReturn;
