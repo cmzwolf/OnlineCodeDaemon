@@ -32,8 +32,10 @@ The PDL server is composed of 7 software elements. Each element corresponds to a
 
 -OnlineCodeDaemon —> The server-side job management daemon
 
--JobMonitor —> A rich Web interface (based on Google Web Toolkit) for job monitoring (this interface works only with the contained into the “version2” branch of the PDL server). 
+-JobMonitor —> A rich Web interface (based on Google Web Toolkit) for job monitoring (this interface works only with the version contained into the “version2” branch of the PDL server). 
+
 
 
 THE PDL CLIENT
+
 For historical reasons the PDL generic client was developed on a google code repository : https://code.google.com/p/vo-param/
