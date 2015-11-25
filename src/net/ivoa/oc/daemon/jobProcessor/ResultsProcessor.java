@@ -9,8 +9,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.print.attribute.standard.MediaSize.Other;
-
 import net.ivoa.pdr.business.GlobalTechConfigBusiness;
 import net.ivoa.pdr.business.JobBusiness;
 import net.ivoa.pdr.business.OutputsBusiness;
@@ -36,16 +34,42 @@ public class ResultsProcessor {
 				.getProcessedJobs();
 
 		List<IOFile> outputs = OutputsBusiness.getInstance()
-				.getPatternInputFile();
+				.getPatternOutputFile();
 
 		for (Integer currentConfigId : idProcessedJobs) {
+			
+			System.out.println("\n Processing job "+ currentConfigId);
+			
 			boolean isJobFinished = ResultsProcessor.getInstance()
 					.isJobFinished(currentConfigId, outputs);
-			if (isJobFinished) {
+			
+			
+			System.out.println("Job is finished "+ isJobFinished);
+			
+			boolean hasJobError = ResultsProcessor.getInstance().hasJobError(
+					currentConfigId, outputs);
+			
+			System.out.println("Job has Errors "+ hasJobError);
+			
+			// if the job is finished without error
+			if (isJobFinished && !hasJobError) {
+				System.out.println("Here 1");
 				ResultsProcessor.getInstance().processFinishedJob(
 						currentConfigId, outputs);
-			} else {
-				System.out.println("no job finished");
+			}
+
+			// if the job is finished with error
+			if (isJobFinished && hasJobError) {
+				System.out.println("Here 2");
+				ResultsProcessor.getInstance().processFinishedJobWithErrors(
+						currentConfigId, outputs);
+			}
+
+			// if the job is not finished but has error
+			if (!isJobFinished && hasJobError) {
+				System.out.println("Here 3");
+				ResultsProcessor.getInstance().processErrorsOnJob(
+						currentConfigId, outputs);
 			}
 		}
 
@@ -84,6 +108,36 @@ public class ResultsProcessor {
 		JobBusiness.getInstance().markJobAsFinished(idConfiguration);
 	}
 
+	private void processErrorsOnJob(Integer idConfiguration,
+			List<IOFile> outputs) throws ClassNotFoundException, SQLException {
+		for (IOFile currentFile : outputs) {
+
+			File errorFile = new File(currentFile.getFileDirectory() + "/"
+					+ idConfiguration + ".error");
+
+			if (errorFile.exists()) {
+				String servletContainer = GlobalTechConfigBusiness
+						.getInstance().getServletContainer();
+
+				String errorFileURL = servletContainer + "output/"
+						+ idConfiguration + ".error";
+
+				String resultName = "errorFile";
+
+				JobBusiness.getInstance().insertResults(idConfiguration,
+						errorFileURL, resultName);
+			}
+		}
+		JobBusiness.getInstance().markJobAsHavingErrors(idConfiguration);
+	}
+
+	private void processFinishedJobWithErrors(Integer idConfiguration,
+			List<IOFile> outputs) throws SQLException, ClassNotFoundException,
+			MalformedURLException, IOException {
+		processFinishedJob(idConfiguration, outputs);
+		processErrorsOnJob(idConfiguration, outputs);
+	}
+
 	private String getFileContentFromUrl(String fileUrl)
 			throws MalformedURLException, IOException {
 		BufferedReader bufferedReader = new BufferedReader(
@@ -103,9 +157,23 @@ public class ResultsProcessor {
 	private boolean isJobFinished(Integer idConfiguration, List<IOFile> outputs) {
 		boolean toReturn = true;
 		for (IOFile currentFile : outputs) {
+			
+			System.out.println("Fetching for file "+ currentFile.getFileDirectory() + "/"
+					+ idConfiguration + "." + currentFile.getFileExtension());
+			
 			File file = new File(currentFile.getFileDirectory() + "/"
 					+ idConfiguration + "." + currentFile.getFileExtension());
 			toReturn = toReturn && (file.exists());
+		}
+		return toReturn;
+	}
+
+	private boolean hasJobError(Integer idConfiguration, List<IOFile> outputs) {
+		boolean toReturn = false;
+		for (IOFile currentFile : outputs) {
+			File file = new File(currentFile.getFileDirectory() + "/"
+					+ idConfiguration + ".error");
+			toReturn = toReturn || (file.exists());
 		}
 		return toReturn;
 	}

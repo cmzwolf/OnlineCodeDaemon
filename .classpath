@@ -5,7 +5,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/OnlineCodeBusiness"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/OnlineCodeCommons"/>
 	<classpathentry kind="lib" path="/Users/zwolf/Work/JavaDev/OnlineCodeLibs/libs/mail.jar"/>
-	<classpathentry kind="lib" path="/Users/zwolf/Work/JavaDev/OnlineCodeLibs/libs/commons-email-1.2.jar"/>
+	<classpathentry kind="lib" path="/Users/zwolf/Work/JavaDev/OnlineCodeLibs/libs/commons-email-1.4.jar"/>
 	<classpathentry kind="lib" path="/Users/zwolf/Work/JavaDev/OnlineCodeLibs/libs/PDL-core.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

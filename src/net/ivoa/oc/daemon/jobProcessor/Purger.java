@@ -33,7 +33,7 @@ public class Purger {
 		List<Integer> jobsToDelete = PurgeBusiness.getInstance()
 				.getIdJobsToOld();
 		List<IOFile> outputs = OutputsBusiness.getInstance()
-				.getPatternInputFile();
+				.getPatternOutputFile();
 
 		// for every job to delete
 		for (Integer currentJobId : jobsToDelete) {

@@ -25,4 +25,5 @@ public class Daemon {
 		ResultsProcessor.getInstance().processResults();
 		MailSenderBusiness.getInstance().notifyUsersOfAvailableResults();
 	}
+	
 }
